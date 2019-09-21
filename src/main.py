@@ -5,7 +5,7 @@ import sys
 
 # start GUI
 app = QApplication([])
-ui = Window()
+ui = Window("What I Do Everyday")
 ui.show()
 
 sys.exit(app.exec_())
