@@ -23,34 +23,29 @@ class GSheetIO():
     def startWrite(self):
         col = 0
         row = 1
-        dateFound = False
-        for value in self.sheet.get_all_values()[0]:
-            col += 1
-            if value == self.formatDate(self.today):
-                dateFound = True
-                break
-        if not dateFound:
-            col += 2
-            self.sheet.update_cell(1, col, self.formatDate(self.today))
-        while self.sheet.cell(row, col) != "":
-            row += 1
-        self.formatDate(self.today)
+        # dateFound = False
+        # for value in self.sheet.get_all_values()[0]:
+        #     col += 1
+        #     if value == self.formatDate(self.today):
+        #         dateFound = True
+        #         break
+        # if not dateFound:
+        #     col += 2
+        #     self.sheet.update_cell(1, col, self.formatDate(self.today))
+        # while self.sheet.cell(row, col) != "":
+        #     row += 1
+        # self.formatDate(self.today)
         return col, row
 
     def writeTask(self, name, start, end, length):
-        self.sheet.update_cell(self.startRow, self.startCol-1, name)
-        self.sheet.update_cell(self.startRow, self.startCol, self.formatTime(start))
-        self.sheet.update_cell(self.startRow+1, self.startCol, self.formatTime(end))
-        self.startRow += 2
+        # self.sheet.update_cell(self.startRow, self.startCol-1, name)
+        # self.sheet.update_cell(self.startRow, self.startCol, self.formatTime(start))
+        # self.sheet.update_cell(self.startRow+1, self.startCol, self.formatTime(end))
+        # self.startRow += 2
         pass
 
     def formatDate(self, myDate):
-        return str(myDate.month) + "/" + str(myDate.day)
+        return myDate.strftime("%m/%d")
 
     def formatTime(self, myTime):
-        return str(myTime.hour) + ":" + str(myTime.minute)
-
-
-# set day
-# if day != today, start new column
-# every time write, write to first blank cells in columns
+        return myTime.strftime("%H:%M:%S")

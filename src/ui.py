@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import *
 from src.gsheet_io import GSheetIO
 from datetime import datetime
 
@@ -30,6 +30,7 @@ class Window(QWidget):
         """initialize the textbox and start task button"""
         setStart = QHBoxLayout()
         taskNameField = QLineEdit()
+        taskNameField.setAttribute(Qt.WA_MacShowFocusRect, False)
         startBtn = QPushButton("Start")
         startBtn.clicked.connect(self.startClick)
         setStart.addWidget(taskNameField)
