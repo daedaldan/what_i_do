@@ -1,6 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
+import time
 
 
 class GSheetIO():
@@ -24,7 +25,10 @@ class GSheetIO():
         col = 0
         row = 1
         dateFound = False
-        for value in self.sheet.get_all_values()[0]:
+        sheet_values = self.sheet.get_all_values()
+        if len(sheet_values) == 0:
+            sheet_values.append([])
+        for value in sheet_values[0]:
             col += 1
             if value == self.formatDate(self.today):
                 dateFound = True
@@ -32,7 +36,7 @@ class GSheetIO():
         if not dateFound:
             col += 2
             self.sheet.update_cell(1, col, self.formatDate(self.today))
-        while self.sheet.cell(row, col) != "":
+        while self.sheet.cell(row, col).value != "":
             row += 1
         self.formatDate(self.today)
         return col, row
@@ -42,7 +46,6 @@ class GSheetIO():
         self.sheet.update_cell(self.startRow, self.startCol, self.formatTime(start))
         self.sheet.update_cell(self.startRow+1, self.startCol, self.formatTime(end))
         self.startRow += 2
-        pass
 
     def formatDate(self, myDate):
         return myDate.strftime("%m/%d")
